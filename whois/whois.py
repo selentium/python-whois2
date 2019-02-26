@@ -113,7 +113,7 @@ class NICClient(object):
             s.set_proxy(socks.SOCKS5, socksproxy, int(port))
         else:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(10)
+        s.settimeout(125)
         s.connect((hostname, 43))
 
         try:
