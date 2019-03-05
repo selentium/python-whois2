@@ -114,6 +114,8 @@ class NICClient(object):
         else:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(125)
+        print("Hostname")
+        print(hostname)
         s.connect((hostname, 43))
 
         try:

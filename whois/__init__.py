@@ -41,6 +41,25 @@ def whois(url, command=False):
     return WhoisEntry.load(domain, text)
 
 
+def whois_quick(url):
+    # clean domain to expose netloc
+    ip_match = re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", url)
+    if ip_match:
+        domain = url
+        try:
+            result = socket.gethostbyaddr(url)
+        except socket.herror as e:
+            pass
+        else:
+            domain = extract_domain(result[0])
+    else:
+        domain = extract_domain(url)
+
+    # try builtin client
+    nic_client = NICClient()
+    text = nic_client.whois_lookup(None, domain.encode('idna'), NICClient.WHOIS_QUICK)
+    return WhoisEntry.load(domain, text)
+
 suffixes = None
 def extract_domain(url):
     """Extract the domain from the given URL
