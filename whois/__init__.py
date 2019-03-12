@@ -58,7 +58,9 @@ def whois_quick(url):
     # try builtin client
     nic_client = NICClient()
     text = nic_client.whois_lookup(None, domain.encode('idna'), NICClient.WHOIS_QUICK)
-    return WhoisEntry.load(domain, text)
+    result =  WhoisEntry.load(domain, text)
+    result['raw'] = text
+    return result
 
 suffixes = None
 def extract_domain(url):
